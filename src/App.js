@@ -1,22 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Papa from "papaparse";
+import csvdata from "./Studenten_mock_data.csv";
+
+/* let students; */
 
 function App() {
+  let csv = [];
+  Papa.parse(csvdata, {
+    download: true,
+    header: true,
+    delimiter: `;`,
+    complete: (input) => {
+      input.data.forEach((item) => csv.push(item));
+    },
+  });
+  console.log(csv);
+  const key = "Wie ben je?";
+  const students = [...new Map(csv.map((item) => [item[key], item])).values()];
+  console.log(students);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>Hallo! Welkom :-D </p>
+        <p></p>
       </header>
     </div>
   );
