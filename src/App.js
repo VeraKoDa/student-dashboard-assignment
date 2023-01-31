@@ -1,29 +1,23 @@
 import "./App.css";
 import Papa from "papaparse";
-import csvdata from "./Studenten_mock_data.csv";
-
-/* let students; */
+import csvdata from "./data/Studenten_mock_data.csv";
+import ParseData from "./data/ParseData.js";
+import { useSelector, useDispatch } from "react-redux";
+import { dataAdded } from "./data/dataSlice";
+import { useEffect, useState } from "react";
 
 function App() {
-  let csv = [];
-  Papa.parse(csvdata, {
-    download: true,
-    header: true,
-    delimiter: `;`,
-    complete: (input) => {
-      input.data.forEach((item) => csv.push(item));
-    },
-  });
-  console.log(csv);
-  const key = "Wie ben je?";
-  const students = [...new Map(csv.map((item) => [item[key], item])).values()];
-  console.log(students);
+  const dispatch = useDispatch();
+  const [data, setData] = useState();
+  /* const storeData = useSelector((state) => state.data); */
+  /* console.log(storeData); */
 
   return (
     <div className="App">
       <header className="App-header">
         <p>Hallo! Welkom :-D </p>
         <p></p>
+        <ParseData />
       </header>
     </div>
   );
