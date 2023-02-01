@@ -8,9 +8,38 @@ import { useEffect, useState } from "react";
 
 function App() {
   const dispatch = useDispatch();
-  const [data, setData] = useState();
-  /* const storeData = useSelector((state) => state.data); */
-  /* console.log(storeData); */
+    const storeData = useSelector((state) => state.data); 
+
+    useEffect(() => {
+        const newParseData = async () => {
+            const loadedData = await parse();
+            return loadedData;
+        };
+        newParseData();
+    }, [])
+
+
+        function parse() {
+        const newdata = new Promise((error) => {
+            Papa.parse(csvdata, {
+                download: true,
+                header: false,
+                delimiter: `;`,
+                complete: (results) => {
+                    console.log(results.data);
+                    dispatch(dataAdded(results.data));
+                },
+                error: (err) => error(err),
+            });
+        });
+        return newdata;
+    }
+
+
+    
+    console.log("app");
+    console.log(storeData)
+
 
   return (
     <div className="App">
