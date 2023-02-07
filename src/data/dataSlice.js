@@ -10,8 +10,8 @@ const dataSlice = createSlice({
 
   reducers: {
     dataAdded(state, action) {
-          console.log(action.payload[0]);
-          
+      console.log(action.payload[0]);
+      state.studentdata = [];
       action.payload.forEach((item) => {
         const studentData = {
           name: item[0],
