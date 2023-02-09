@@ -8,38 +8,34 @@ import { useEffect, useState } from "react";
 
 function App() {
   const dispatch = useDispatch();
-    const storeData = useSelector((state) => state.data); 
+  const storeData = useSelector((state) => state.data);
 
-    useEffect(() => {
-        const newParseData = async () => {
-            const loadedData = await parse();
-            return loadedData;
-        };
-        newParseData();
-    }, [])
+  useEffect(() => {
+    const newParseData = async () => {
+      const loadedData = await parse();
+      return loadedData;
+    };
+    newParseData();
+  }, []);
 
+  function parse() {
+    const newdata = new Promise((error) => {
+      Papa.parse(csvdata, {
+        download: true,
+        header: false,
+        delimiter: `;`,
+        complete: (results) => {
+          console.log(results.data);
+          dispatch(dataAdded(results.data));
+        },
+        error: (err) => error(err),
+      });
+    });
+    return newdata;
+  }
 
-        function parse() {
-        const newdata = new Promise((error) => {
-            Papa.parse(csvdata, {
-                download: true,
-                header: false,
-                delimiter: `;`,
-                complete: (results) => {
-                    console.log(results.data);
-                    dispatch(dataAdded(results.data));
-                },
-                error: (err) => error(err),
-            });
-        });
-        return newdata;
-    }
-
-
-    
-    console.log("app");
-    console.log(storeData)
-
+  console.log("app");
+  console.log(storeData);
 
   return (
     <div className="App">
