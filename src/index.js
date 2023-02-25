@@ -2,13 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import ParseData from "./data/ParseData";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import reportWebVitals from "./reportWebVitals";
-import Papa from "papaparse";
-import csvdata from "./data/Studenten_mock_data.csv";
-import { useSelector, useDispatch } from "react-redux";
-import { dataAdded } from "./data/dataSlice";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -16,7 +14,10 @@ store.subscribe(() => {});
 
 root.render(
   <Provider store={store}>
-    <App />
+    <ParseData />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
 

@@ -2,6 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   studentdata: [],
+  status: "idle",
+  columns: [],
+  students: [],
+  assignments: [],
+  loggedIn: false,
+  loggedInStudent: false,
 };
 
 const dataSlice = createSlice({
@@ -10,23 +16,40 @@ const dataSlice = createSlice({
 
   reducers: {
     dataAdded(state, action) {
-      console.log(action.payload[0]);
+      // first empty studentdata
       state.studentdata = [];
-      action.payload.forEach((item) => {
-        const studentData = {
-          name: item[0],
-          assignment: item[1],
-          difficulty: item[2],
-          fun: item[3],
-        };
-        state.studentdata.push(studentData);
-      });
+      // change status to loading
+      state.status = "loading";
+      // change states
+      state.studentdata = action.payload.studentData;
+      state.students = action.payload.students;
+      state.assignments = action.payload.assignments;
+      // change status
+      state.status = "finished";
     },
-    dataSort(state, action) {
-      console.log(`in dataSort met state: ${state} en met action: ${action}`);
+
+    columnsAdded(state, action) {
+      state.columns = [];
+      state.columns = action.payload;
+    },
+
+    changeColumns(state, action) {
+      state.columns[action.payload.id].checked = action.payload.idValue;
+    },
+
+    loggedInChanged(state, action) {
+      state.loggedIn = action.payload.bool;
+      state.loggedInStudent = action.payload.name;
     },
   },
 });
-export const { dataAdded, dataSort } = dataSlice.actions;
+export const {
+  dataAdded,
+  columnsAdded,
+  changeColumns,
+  dataSort,
+  loggedInChanged,
+  logOutClick,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;
