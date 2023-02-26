@@ -14,7 +14,6 @@ body {
 .App {
   text-align: center;
 }
-
 .App-header {
   height: 100px;
   display: flex;
@@ -31,10 +30,10 @@ body {
   background-color: whitesmoke;
   border-radius: 5px;
 }
-
 svg {
   overflow: visible;
 }
+
 .userdata { 
   display: flex;
   width: 100%;
@@ -72,6 +71,7 @@ svg {
 
 .loginDiv {
   font-size: 25px;
+  height: 100vh;
 }
 .loginDiv select {
   width: 150px;
